@@ -10,7 +10,7 @@ app.config(function($routeProvider) {
 		templateUrl: "views/addItem.html",
 		controller: "GroceryListItemsController"
 	})
-	.when("/addItem/:id/:cat",{
+	.when("/addItem/edit/:id/",{
 		templateUrl: "views/addItem.html",
 		controller: "GroceryListItemsController"
 	})
@@ -33,6 +33,13 @@ app.service("GroceryService", function() {
 		{id:7, completed: true, itemName: 'OCB', date: '06-06-2017'},
 		{id:8, completed: true, itemName: 'KitKat', date: '06-06-2017'}
 	];
+
+	groceryService.findById = function(id) {
+		for(var item in groceryService.groceryItems) {
+			if(groceryService.groceryItems[item].id === id)
+				return groceryService.groceryItems[item];
+		}
+	};
 
 	groceryService.getNewId = function() {
 		if(groceryService.newId){
