@@ -98,3 +98,10 @@ app.controller("GroceryListItemController", ["$scope", "$routeParams", "$locatio
 	}
 
 }]);
+
+app.directive("awGroceryItem", function(){
+	return{
+		restrict: "E",
+		templateUrl: "views/groceryItem.html"
+	}
+});
