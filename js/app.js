@@ -33,8 +33,20 @@ app.service("GroceryService", function() {
 		{id:7, completed: true, itemName: 'OCB', date: '06-06-2017'},
 		{id:8, completed: true, itemName: 'KitKat', date: '06-06-2017'}
 	];
-	
+
+	groceryService.getNewId = function() {
+		if(groceryService.newId){
+			groceryService.newId++;
+			return groceryService.newId;
+		} else {
+			var maxId = _.max(groceryService.groceryItems, function(entry) { return entry.id; })
+			groceryService.newId = maxId.id + 1;
+			return groceryService.newId;
+		}
+	};
+
 	groceryService.save = function(entry) {
+		entry.id = groceryService.getNewId();
 		groceryService.groceryItems.push(entry);
 	};
 
