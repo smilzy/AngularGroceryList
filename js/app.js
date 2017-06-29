@@ -17,21 +17,28 @@ app.config(function($routeProvider) {
 	.otherwise({
 		redirectTo: "/"
 	})
-})
-app.service("GroceryService", function() {
+});
 
-	var groceryService = {};
+app.service("GroceryService", function($http){
 
-	groceryService.groceryItems = [
-		{id:1, completed: true, itemName: 'milk', date: new Date('June 1, 2017 16:20:00')},
-		{id:2, completed: true, itemName: 'bread', date: new Date('June 2, 2017 13:29:00')},
-		{id:3, completed: true, itemName: 'meat', date: new Date('June 2, 2017 14:55:00')},
-		{id:4, completed: true, itemName: 'ice cream', date: new Date('June 3, 2017 08:00:00')},
-		{id:5, completed: true, itemName: 'tomatoes', date: new Date('June 3, 2017 09:20:00')},
-		{id:6, completed: true, itemName: 'black zero', date: new Date('June 4, 2017 23:55:00')},
-		{id:7, completed: true, itemName: 'OCB', date: new Date('June 5, 2017 00:20:00')},
-		{id:8, completed: true, itemName: 'KitKat', date: new Date('June 5, 2017 19:30:00')}
-	];
+    var groceryService = {};
+
+    groceryService.groceryItems = [];
+
+    $http.get("/data/server_data.json")
+        .then(function onSuccess(response) {
+        	var data = response.data;
+            groceryService.groceryItems = data;
+
+            for(var item in groceryService.groceryItems){
+                groceryService.groceryItems[item].date = new Date(groceryService.groceryItems[item].date);
+            }
+        })
+        .catch(function onError(response){
+        	var data = response.data;
+        	var status = response.status;
+            alert("Things went wrong!");
+        });
 
 	groceryService.findById = function(id) {
 		for(var item in groceryService.groceryItems) {
@@ -53,7 +60,7 @@ app.service("GroceryService", function() {
 
 	groceryService.markCompleted = function(entry){
 		entry.completed = !entry.completed;
-	}
+	};
 
 	groceryService.removeItem = function(entry){
 		var index = groceryService.groceryItems.indexOf(entry);
@@ -77,18 +84,22 @@ app.service("GroceryService", function() {
 	};
 
 	return groceryService;
-})
+});
 
 app.controller("HomeController", ["$scope", "GroceryService", function($scope, GroceryService) {
 	$scope.appTitle = "Grocery List";
 	$scope.groceryItems = GroceryService.groceryItems;
 	$scope.removeItem = function(entry) {
 		GroceryService.removeItem(entry);
-	}
+	};
 
 	$scope.markCompleted = function(entry) {
 		GroceryService.markCompleted(entry);
 	};
+
+	$scope.$watch( function(){ return GroceryService.groceryItems; }, function(groceryItems) {
+		$scope.groceryItems = groceryItems;
+	})
 
 }]);
 
@@ -104,7 +115,7 @@ app.controller("GroceryListItemController", ["$scope", "$routeParams", "$locatio
 	$scope.save = function() {
 		GroceryService.save( $scope.groceryItem );
 		$location.path("/");
-	}
+	};
 
 }]);
 

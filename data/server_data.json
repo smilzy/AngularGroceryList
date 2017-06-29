@@ -1,0 +1,10 @@
+[
+	{"id": 1, "completed": false, "itemName": "milk", "date": "June 1, 2017 16:20:00"},
+	{"id": 2, "completed": false, "itemName": "bread", "date": "June 2, 2017 13:29:00"},
+	{"id": 3, "completed": false, "itemName": "meat", "date": "June 2, 2017 14:55:00"},
+	{"id": 4, "completed": false, "itemName": "ice cream", "date": "June 3, 2017 08:00:00"},
+	{"id": 5, "completed": false, "itemName": "tomatoes", "date": "June 3, 2017 09:20:00"},
+	{"id": 6, "completed": false, "itemName": "black", "date": "June 4, 2017 23:55:00"},
+	{"id": 7, "completed": false, "itemName": "OCB", "date": "June 5, 2017 00:20:00"},
+	{"id": 8, "completed": false, "itemName": "KitKat", "date": "June 5, 2017 19:30:00"}
+]
