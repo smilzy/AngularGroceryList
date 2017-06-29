@@ -51,6 +51,10 @@ app.service("GroceryService", function() {
 		}
 	};
 
+	groceryService.markCompleted = function(entry){
+		entry.completed = !entry.completed;
+	}
+
 	groceryService.removeItem = function(entry){
 		var index = groceryService.groceryItems.indexOf(entry);
 
@@ -81,6 +85,11 @@ app.controller("HomeController", ["$scope", "GroceryService", function($scope, G
 	$scope.removeItem = function(entry) {
 		GroceryService.removeItem(entry);
 	}
+
+	$scope.markCompleted = function(entry) {
+		GroceryService.markCompleted(entry);
+	};
+
 }]);
 
 app.controller("GroceryListItemController", ["$scope", "$routeParams", "$location", "GroceryService", function($scope, $routeParams, $location, GroceryService) {	
