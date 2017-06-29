@@ -5,9 +5,9 @@
     <form name="groceryForm">
 
         <!-- Tests the form for any-input/leaving-it-be/validation -->
-        <p><b>Dirty: </b> {{groceryForm.$dirty}}</p>
+<!--    <p><b>Dirty: </b> {{groceryForm.$dirty}}</p>
         <p><b>Pristine: </b> {{groceryForm.$pristine}}</p>
-        <p><b>Valid: </b> {{groceryForm.$valid}}</p>
+        <p><b>Valid: </b> {{groceryForm.$valid}}</p> -->
 
         <div class="alert alert-danger" role="alert" ng-show="groceryForm.$dirty && !groceryForm.$valid">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -33,5 +33,4 @@
             </a>
         </div>
     </form>
-
 </div>

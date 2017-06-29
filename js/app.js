@@ -20,9 +20,7 @@ app.config(function($routeProvider) {
 });
 
 app.service("GroceryService", function($http){
-
     var groceryService = {};
-
     groceryService.groceryItems = [];
 
     $http.get("/data/server_data.json")
@@ -72,9 +70,7 @@ app.service("GroceryService", function($http){
         			var index = groceryService.groceryItems.indexOf(entry);
 
 					groceryService.groceryItems.splice(index, 1); // start at INDEX and delete 1
-        		}
-            	
-
+        			}
         		})
         		.catch(function onError(response){
         		var data = response.data;
@@ -83,7 +79,6 @@ app.service("GroceryService", function($http){
 			};
 
 	groceryService.save = function(entry) {
-
 		var updateItem = groceryService.findById(entry.id);
 
 		if(updateItem) {
@@ -101,12 +96,11 @@ app.service("GroceryService", function($http){
 	        		var data = response.data;
 	        		var status = response.status;
         		});
-		}
-		else{
-			$http.post("data/added_item.json", entry)
-				.then(function onSuccess(response) {
-        		var data = response.data;
-            	entry.id = data.newId;
+				} else {
+					$http.post("data/added_item.json", entry)
+					.then(function onSuccess(response) {
+	        		var data = response.data;
+	            	entry.id = data.newId;
         		})
         		.catch(function onError(response){
         		var data = response.data;
@@ -115,7 +109,6 @@ app.service("GroceryService", function($http){
 			groceryService.groceryItems.push(entry);
 		}
 	};
-
 	return groceryService;
 });
 
@@ -133,7 +126,6 @@ app.controller("HomeController", ["$scope", "GroceryService", function($scope, G
 	$scope.$watch( function(){ return GroceryService.groceryItems; }, function(groceryItems) {
 		$scope.groceryItems = groceryItems;
 	})
-
 }]);
 
 app.controller("GroceryListItemController", ["$scope", "$routeParams", "$location", "GroceryService", function($scope, $routeParams, $location, GroceryService) {	
@@ -144,12 +136,10 @@ app.controller("GroceryListItemController", ["$scope", "$routeParams", "$locatio
 		$scope.groceryItem = _.clone(GroceryService.findById(parseInt($routeParams.id)));
 	}
 
-
 	$scope.save = function() {
 		GroceryService.save( $scope.groceryItem );
 		$location.path("/");
 	};
-
 }]);
 
 app.directive("awGroceryItem", function(){
