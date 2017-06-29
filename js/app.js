@@ -19,12 +19,11 @@ app.config(function($routeProvider) {
 	})
 })
 
-app.controller("HomeController", ["$scope", function($scope) {
-	$scope.appTitle = "Grocery List";
-}]);
+app.service("GroceryService", function() {
 
-app.controller("GroceryListItemsController", ["$scope", "$routeParams", function($scope, $routeParams) {
-	$scope.groceryItems = [
+	var groceryService = {};
+
+	groceryService.groceryItems = [
 		{completed: true, itemName: 'milk', date: '01-06-2017'},
 		{completed: true, itemName: 'bread', date: '01-06-2017'},
 		{completed: true, itemName: 'meat', date: '02-06-2017'},
@@ -34,5 +33,16 @@ app.controller("GroceryListItemsController", ["$scope", "$routeParams", function
 		{completed: true, itemName: 'OCB', date: '06-06-2017'},
 		{completed: true, itemName: 'KitKat', date: '06-06-2017'}
 	]
+
+	return groceryService;
+})
+
+app.controller("HomeController", ["$scope", function($scope) {
+	$scope.appTitle = "Grocery List";
+}]);
+
+app.controller("GroceryListItemsController", ["$scope", "$routeParams", "GroceryService", function($scope, $routeParams, GroceryService) {
+	$scope.groceryItems = GroceryService.groceryItems;
+
 	$scope.rp = "Route Parameter Value: " + $routeParams.id + " " + $routeParams.cat; 
 }]);
