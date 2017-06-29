@@ -73,9 +73,20 @@ app.service("GroceryService", function($http){
 		var updateItem = groceryService.findById(entry.id);
 
 		if(updateItem) {
-			updateItem.completed = entry.completed;
-			updateItem.itemName = entry.itemName;
-			updateItem.date = entry.date;
+			$http.post("data/updated_item.json", entry)
+				.then(function onSuccess(response) {
+        		var data = response.data;
+            	
+            	if(data.status == 1) {
+	            	updateItem.completed = entry.completed;
+					updateItem.itemName = entry.itemName;
+					updateItem.date = entry.date;
+					}
+        		})
+        		.catch(function onError(response){
+	        		var data = response.data;
+	        		var status = response.status;
+        		});
 		}
 		else{
 			$http.post("data/added_item.json", entry)
